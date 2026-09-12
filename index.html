@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <!-- Links to your CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-wrapper">
+        <div id="scoreBoard">Score: <span id="score">0</span></div>
+        
+        <!-- The grid where the snake will move -->
+        <div id="gameBoard"></div>
+
+        <!-- Your custom start/game over menu -->
+        <div id="startMenu" class="overlay">
+            <div class="menu-card">
+                <div class="icon">🐍</div>
+                <h2 id="menuTitle">Ready to Play?</h2>
+                <p id="menuText">Click Start to begin!</p>
+                <button id="startButton">Start</button>
+            </div>
+        </div>
+    </div>
+
+   <!-- Make sure ALL THREE of these are in your HTML -->
+    <audio id="eatSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="dieSound" src="https://assets.mixkit.co/active_storage/sfx/3148/3148-preview.mp3"></audio>
+    <audio id="bgMusic" src="https://assets.mixkit.co/active_storage/sfx/135/135-preview.mp3" loop></audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>
