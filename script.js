@@ -165,6 +165,7 @@ function startGame() {
     bgMusic.play().catch(e => console.log("Waiting for user to click"));
 }
 
+// Listen for Keyboard Inputs
 document.addEventListener('keydown', (e) => {
     const goingUp = dy === -1;
     const goingDown = dy === 1;
@@ -178,3 +179,46 @@ document.addEventListener('keydown', (e) => {
 
 startButton.addEventListener('click', startGame);
 createGrid();
+
+
+// --- MOBILE SWIPE CONTROLS ---
+let touchStartX = 0;
+let touchStartY = 0;
+
+// Record where the finger first touches the screen
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: false });
+
+// Record where the finger leaves the screen and calculate direction
+document.addEventListener('touchend', (e) => {
+    let touchEndX = e.changedTouches[0].screenX;
+    let touchEndY = e.changedTouches[0].screenY;
+    
+    handleSwipe(touchStartX, touchStartY, touchEndX, touchEndY);
+});
+
+function handleSwipe(startX, startY, endX, endY) {
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+    
+    // Ignore tiny accidental taps (must swipe at least 30 pixels)
+    if (Math.abs(deltaX) < 30 && Math.abs(deltaY) < 30) return;
+
+    const goingUp = dy === -1;
+    const goingDown = dy === 1;
+    const goingLeft = dx === -1;
+    const goingRight = dx === 1;
+
+    // Was the swipe more horizontal or vertical?
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Horizontal Swipe
+        if (deltaX > 0 && !goingLeft) { dx = 1; dy = 0; } // Right
+        else if (deltaX < 0 && !goingRight) { dx = -1; dy = 0; } // Left
+    } else {
+        // Vertical Swipe
+        if (deltaY > 0 && !goingUp) { dx = 0; dy = 1; } // Down
+        else if (deltaY < 0 && !goingDown) { dx = 0; dy = -1; } // Up
+    }
+}
